@@ -75,8 +75,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin', // admin
-        password: '111111' // 111111
+        username: 'admin',
+        password: 'admin'
       },
       loginRules: {
         username: [{required: true, trigger: 'change', validator: validateUsername}],
@@ -137,7 +137,6 @@ export default {
               this.loading = false
             })
         } else {
-          console.log('error submit!!')
           return false
         }
       })

@@ -11,7 +11,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
+      config.headers['Authorization'] = `Bearer ${ getToken() }`
     }
     return config
   },
@@ -24,10 +24,10 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-
+    const msgEorror = res.message || '请求失败'
     if (res.code !== 0) {
       Message({
-        message: res.message || 'Error',
+        message: msgEorror,
         type: 'error',
         duration: 5 * 1000
       })
@@ -42,15 +42,14 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(msgEorror))
     } else {
       return res
     }
   },
   error => {
-    console.log('err' + error)
     Message({
-      message: error.message,
+      message: error.response.data.msg || '请求失败',
       type: 'error',
       duration: 5 * 1000
     })
