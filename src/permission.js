@@ -11,10 +11,14 @@ NProgress.configure({ showSpinner: false })
 const whiteList = ['/login', '/auth-redirect']
 
 router.beforeEach(async(to, from, next) => {
+
   NProgress.start()
   document.title = getPageTitle(to.meta.title)
   const hasToken = getToken()
   if (hasToken) {
+    if(whiteList.indexOf(to.path) === -1) {
+      to.path && to.meta.title &&store.dispatch('addHistory', { path: to.path, title: to.meta.title })
+    }
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()

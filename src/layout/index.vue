@@ -7,17 +7,19 @@
         <navbar />
         <tags-view v-if="needTagsView" />
       </div>
+      <Histroy />
       <app-main />
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
     </div>
+
   </div>
 </template>
 
 <script>
 import RightPanel from '@/components/RightPanel'
-import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
+import { AppMain, Navbar, Settings, Sidebar, TagsView, Histroy } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
@@ -29,7 +31,8 @@ export default {
     RightPanel,
     Settings,
     Sidebar,
-    TagsView
+    TagsView,
+    Histroy
   },
   mixins: [ResizeMixin],
   computed: {
